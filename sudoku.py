@@ -12,8 +12,6 @@ from imports import *
 def main():
 
 	# Initialize board and other necessities
-	pygame.init()
-	screen = pygame.display.set_mode([800, 800])
 	fileName = input("Enter the filename: ")
 	initial = initializeGame(fileName)
 	board = initial[0]

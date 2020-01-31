@@ -1,14 +1,19 @@
-# SUDOKU 
+# SUDOKU
 # THIS PROJECT LOADS A SUDOKU BOARD FROM A TEXT FILE AND ALLOWS THE USER
 # TO ATTEMPT TO SOLVE THE PUZZLE, OR TO AUTOMATICALLY SOLVE IT AT ANY
 # GIVEN TIME DURING THE GAME. THE USER CAN ALSO SAVE THE GAME AND
 # RESUME AT ANY TIME
 
+import sys
+import pygame
+from pygame.locals import *
 from imports import *
 
 def main():
 
 	# Initialize board and other necessities
+	pygame.init()
+	screen = pygame.display.set_mode([800, 800])
 	fileName = input("Enter the filename: ")
 	initial = initializeGame(fileName)
 	board = initial[0]
@@ -16,7 +21,7 @@ def main():
 	moves = initial[2]
 	solved = False
 	userChoice = getChoice([PLAY, SOLVE_SAVE])
-	
+
 	# Solve the board
 	if userChoice == SOLVE_SAVE:
 		prettyPrint(solvedBoard)
@@ -60,7 +65,7 @@ def main():
 						print(str(num) + INCORRECT + "(" + \
 						str(row+ 1) + ", " + \
 						str(col + 1) + ")")
-                        
+
 				# when not checking for correctness
 				else:
 					# when the desired space is not empty
@@ -77,7 +82,7 @@ def main():
 							# Make the move and update the move list
 							board[row][col] = num
 							moves.append(movePosition)
-			
+
 			# save the game
 			if userChoice == SOLVE_SAVE:
 				fileName = input("Enter the file name to save under: ")

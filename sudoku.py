@@ -4,9 +4,6 @@
 # GIVEN TIME DURING THE GAME. THE USER CAN ALSO SAVE THE GAME AND
 # RESUME AT ANY TIME
 
-import sys
-import pygame
-from pygame.locals import *
 from imports import *
 
 def main():

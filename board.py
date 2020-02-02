@@ -1,4 +1,5 @@
-class Board(Game):
+import pygame
+class Board():
 	def __init__(self):
 		self.initializeBoard()
 		self.moves = []
@@ -38,7 +39,7 @@ class Board(Game):
 	def initializeBoard(self):
 
 		# open the file for reading the board
-		fileName = input("Enter the file name: ")
+		fileName = "puzzle.txt"
 		initialBoard = []
 		data = open(fileName, "r")
 

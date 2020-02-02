@@ -1,5 +1,6 @@
 import pygame, sys
 from pygame.locals import *
+from pygame_functions import *
 from game import Game
 
 class Interface:
@@ -35,10 +36,10 @@ class Interface:
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
 					sys.exit()
-				
+
 				if event.type == pygame.KEYDOWN:
-					if event.key == pygame.K_RETURN:
-						sys.exit()
+					if event.key == pygame.K_p:
+						self.game.makeMove()
 
 				if event.type == pygame.KEYDOWN:
 					if event.key == pygame.K_s:
@@ -46,13 +47,22 @@ class Interface:
 
 				if event.type == pygame.KEYDOWN:
 					if event.key == pygame.K_SPACE:
-						self.game.board.spaces = self.game.board.solved
+						self.game.board.spaces = self.game.board.solve(self.game.board.spaces)
 
 			font = pygame.font.Font("Rajdhani-Bold.ttf", 32)
 			for i in range(9):
 				for j in range(9):
-					toRender = "" if self.game.board.spaces[i][j] == 0 else str(self.game.board.spaces[i][j])
-					text = font.render(toRender, True, (255,255,255))
-					self.window.blit(text, (self.width / 9 * j + (self.width / 9 / 2) - 8, self.width / 9 * i + (self.width / 9 / 2) - 16))
+
+					if(self.game.board.spaces[i][j] == 0):
+						textBox = makeTextBox((self.width / 9 * j + (self.width / 9 / 2) - 8), (self.width / 9 * i + (self.width / 9 / 2) - 16), self.width / 9, case=0, startingText=str(self.game.board.spaces[i][j]), maxLength=0, fontSize=32)
+						showTextBox(textBox)
+						entry = textBoxInput(textBox)
+					else:
+						toRender = str(self.game.board.spaces[i][j])
+						text = font.render(toRender, True, (255,255,255))
+						self.window.blit(text, (self.width / 9 * j + (self.width / 9 / 2) - 8, self.width / 9 * i + (self.width / 9 / 2) - 16))
+					# toRender = "" if self.game.board.spaces[i][j] == 0 else str(self.game.board.spaces[i][j])
+					# text = font.render(toRender, True, (255,255,255))
+					# self.window.blit(text, (self.width / 9 * j + (self.width / 9 / 2) - 8, self.width / 9 * i + (self.width / 9 / 2) - 16))
 
 			pygame.display.update()

@@ -4,7 +4,7 @@ from board import Board
 class Game:
 	def __init__(self):
 		self.board = Board()
-		self.correctness = False
+		self.correctnessCheck()
 		self.solved = False
 
 	# savePuzzle() writes the contents a sudoku puzzle out

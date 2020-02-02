@@ -29,6 +29,7 @@ class Interface:
 			pygame.draw.line(self.window, (255,255,255), (i * gap, 0), (i * gap, self.width), width)
 
 	def update(self):
+		print("Press p to play, s to save, space to solve")
 		while True:
 			self.window.fill((0, 0, 0))
 			self.drawLines()
@@ -53,16 +54,8 @@ class Interface:
 			for i in range(9):
 				for j in range(9):
 
-					if(self.game.board.spaces[i][j] == 0):
-						textBox = makeTextBox((self.width / 9 * j + (self.width / 9 / 2) - 8), (self.width / 9 * i + (self.width / 9 / 2) - 16), self.width / 9, case=0, startingText=str(self.game.board.spaces[i][j]), maxLength=0, fontSize=32)
-						showTextBox(textBox)
-						entry = textBoxInput(textBox)
-					else:
-						toRender = str(self.game.board.spaces[i][j])
-						text = font.render(toRender, True, (255,255,255))
-						self.window.blit(text, (self.width / 9 * j + (self.width / 9 / 2) - 8, self.width / 9 * i + (self.width / 9 / 2) - 16))
-					# toRender = "" if self.game.board.spaces[i][j] == 0 else str(self.game.board.spaces[i][j])
-					# text = font.render(toRender, True, (255,255,255))
-					# self.window.blit(text, (self.width / 9 * j + (self.width / 9 / 2) - 8, self.width / 9 * i + (self.width / 9 / 2) - 16))
+					toRender = "" if self.game.board.spaces[i][j] == 0 else str(self.game.board.spaces[i][j])
+					text = font.render(toRender, True, (255,255,255))
+					self.window.blit(text, (self.width / 9 * j + (self.width / 9 / 2) - 8, self.width / 9 * i + (self.width / 9 / 2) - 16))
 
 			pygame.display.update()

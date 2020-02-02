@@ -1,7 +1,7 @@
 import pygame
 class Board():
 	def __init__(self):
-		self.initializeBoard()
+		self.spaces = []
 		self.moves = []
 
 	# prettyPrint() prints the board with row and column labels,
@@ -36,10 +36,10 @@ class Board():
 	# initializeBoard() creates the initial board from the file
 	# Input: fileName, the name of the file to read from
 	# output: initialBoard, the list that represents the initial board
-	def initializeBoard(self):
+	def initializeBoard(self, fileName):
 
 		# open the file for reading the board
-		fileName = "puzzle.txt"
+		fileName = fileName
 		initialBoard = []
 		data = open(fileName, "r")
 

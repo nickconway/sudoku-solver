@@ -1,61 +1,53 @@
-import pygame, sys
-from pygame.locals import *
-from pygame_functions import *
+import tkinter as tk
+from tkinter import tix
+import sys
 from game import Game
 
 class Interface:
 	def __init__(self):
-		pygame.init()
-		self.drawWindow()
 		self.game = Game()
 		# self.game.play()
-		self.update()
+		self.window = tix.Tk(className="Sudoku")
+		self.window.title("Sudoku")
 
-	def drawWindow(self):
-		self.width = 800
-		self.window = pygame.display.set_mode((self.width, self.width))
-		pygame.display.set_caption("Sudoku - Nick Conway")
-		icon = pygame.image.load("images/icon.png")
-		pygame.display.set_icon(icon)
+		buttons = tk.Frame(self.window)
+		fileButton = tk.tix.FileEntry(buttons, label="Choose file: ", command=self.makeBoard).pack(side="left")
+		solveButton = tk.Button(buttons, width=25, text="Solve", command=self.solvePuzzle).pack(side="left")
+		saveButton = tk.Button(buttons, width=25, text="Save", command=self.game.savePuzzle).pack(side="left")
+		buttons.pack()
 
-	def drawLines(self):
-		gap = self.width / 9
-		for i in range(10):
-			if i % 3 == 0 and i != 0:
-				width = 5
-			else:
-				width = 1
-			pygame.draw.line(self.window, (255,255,255), (0, i * gap), (self.width, i * gap), width)
-			pygame.draw.line(self.window, (255,255,255), (i * gap, 0), (i * gap, self.width), width)
+		self.window.mainloop()
+		self.game.board.prettyPrint(True)
 
-	def update(self):
-		print("Press p to play, s to save, space to solve")
-		while True:
-			self.window.fill((0, 0, 0))
-			self.drawLines()
+	def solvePuzzle(self):
+		grid = tk.Frame(self.window)
+		for i in range(9):
+			for j in range(9):
+				value = tk.Label(grid, text=str(self.game.board.solved[i][j]), width=2).grid(row=i, column=j)
+			grid.pack()
 
-			for event in pygame.event.get():
-				if event.type == pygame.QUIT:
-					sys.exit()
+	def makeBoard(self, fileName):
+		self.game.board.initializeBoard(fileName)
+		grid = tk.Frame(self.window)
+		self.configurators = [
+			[0, 0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0, 0],
+			[0, 0, 0, 0, 0, 0, 0, 0, 0]
+		]
 
-				if event.type == pygame.KEYDOWN:
-					if event.key == pygame.K_p:
-						self.game.makeMove()
-
-				if event.type == pygame.KEYDOWN:
-					if event.key == pygame.K_s:
-						self.game.savePuzzle()
-
-				if event.type == pygame.KEYDOWN:
-					if event.key == pygame.K_SPACE:
-						self.game.board.spaces = self.game.board.solve(self.game.board.spaces)
-
-			font = pygame.font.Font("Rajdhani-Bold.ttf", 32)
+		if(self.game.board.spaces):
 			for i in range(9):
 				for j in range(9):
-
-					toRender = "" if self.game.board.spaces[i][j] == 0 else str(self.game.board.spaces[i][j])
-					text = font.render(toRender, True, (255,255,255))
-					self.window.blit(text, (self.width / 9 * j + (self.width / 9 / 2) - 8, self.width / 9 * i + (self.width / 9 / 2) - 16))
-
-			pygame.display.update()
+					if self.game.board.spaces[i][j] == 0:
+						textInput = tk.Entry(grid, width=2)
+						textInput.grid(row=i, column=j)
+						self.configurators[i][j] = textInput
+					else:
+						value = tk.Label(grid, text=str(self.game.board.spaces[i][j]), width=2).grid(row=i, column=j)
+			grid.pack()

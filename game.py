@@ -4,7 +4,6 @@ from board import Board
 class Game:
 	def __init__(self):
 		self.board = Board()
-		self.correctnessCheck()
 		self.solved = False
 
 	# savePuzzle() writes the contents a sudoku puzzle out
@@ -122,45 +121,3 @@ class Game:
 					self.board.spaces[row][col] = num
 					self.board.moves.append(movePosition)
 
-	def play(self):
-		userChoice = self.getChoice(["p", "s"])
-
-		# Solve the board
-		if userChoice == "s":
-			self.board.prettyPrint(True)
-			self.solved = True
-
-		if userChoice == "p":
-			# Checks if the user wants to check for correctness
-			self.correctnessCheck()
-
-			# Keep playing until the board is full or the user quits
-			while (not self.board.isBoardFull()):
-				self.board.prettyPrint()
-
-				# Get userChoice from user
-				userChoice = self.getChoice(["p", "s", "u", "q"])
-
-				# If the user wants to play
-				if userChoice == "p":
-					self.makeMove()
-
-				# save the game
-				if userChoice == "s":
-					self.savePuzzle()
-
-				# undo the last move
-				if userChoice == "u":
-					self.board.undoMove()
-
-				# quit the game
-				if userChoice == "q":
-					sys.exit()
-
-		# tell the user if they won or not
-		if not self.solved:
-			self.board.prettyPrint()
-			if self.board.spaces == self.board.solved:
-				print("You won!")
-			elif self.board.isBoardFull(self.board.spaces):
-				print("You filled the board, but didn't win.")

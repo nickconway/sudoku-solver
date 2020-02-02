@@ -4,6 +4,8 @@ This program loads a sudoku board from a text file and recursively generates the
 
 ## Features
 
+GUI version in dev branch, work in progress
+
 Solve the board at any time
 
 Saving and resuming progress

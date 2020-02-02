@@ -4,10 +4,5 @@
 # GIVEN TIME DURING THE GAME. THE USER CAN ALSO SAVE THE GAME AND
 # RESUME AT ANY TIME
 
-from game import *
-
-def main():
-	game = Game()
-	game.play()
-
-main()
+from interface import Interface
+interface = Interface()

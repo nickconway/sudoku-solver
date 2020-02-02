@@ -1,4 +1,4 @@
-class Board:
+class Board(Game):
 	def __init__(self):
 		self.initializeBoard()
 		self.moves = []
@@ -38,7 +38,7 @@ class Board:
 	def initializeBoard(self):
 
 		# open the file for reading the board
-		fileName = input("Enter the filename: ")
+		fileName = input("Enter the file name: ")
 		initialBoard = []
 		data = open(fileName, "r")
 

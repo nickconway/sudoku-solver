@@ -11,7 +11,8 @@ class Game:
 	#              to a file in comma separated format
 	# Input:       board;    the square 2d puzzle (of integers) to write to a file
 	#              fileName; the name of the file to use for writing to 
-	def savePuzzle(self, fileName):
+	def savePuzzle(self):
+		fileName = input("Enter the file name to save under: ")
 		filePath = open(fileName, "w")
 
 		for i in range(len(self.board.spaces)):
@@ -115,12 +116,7 @@ class Game:
 			if self.board.spaces[row][col] == 0:
 				# Tell the user if they are violating the 3 rules
 				if num in self.board.getExcludedNumbers(self.board.spaces, row, col):
-					if num in self.board.getExcludedNumbers(self.board.spaces, row, col)[:9]:
-						print("That row already contains a", str(num) + ".")
-					if num in self.board.getExcludedNumbers(self.board.spaces, row, col)[9:18]:
-						print("That column already contains a", str(num) + ".")
-					if num in self.board.getExcludedNumbers(self.board.spaces, row, col)[18:27]:
-						print("That square already contains a", str(num) + ".")
+					print(str(num) + " cannot go here")
 				else:
 					# Make the move and update the move list
 					self.board.spaces[row][col] = num
@@ -136,7 +132,7 @@ class Game:
 
 		if userChoice == "p":
 			# Checks if the user wants to check for correctness
-			correctness = self.correctnessCheck()
+			self.correctnessCheck()
 
 			# Keep playing until the board is full or the user quits
 			while (not self.board.isBoardFull()):
@@ -151,8 +147,7 @@ class Game:
 
 				# save the game
 				if userChoice == "s":
-					fileName = input("Enter the file name to save under: ")
-					self.savePuzzle(fileName)
+					self.savePuzzle()
 
 				# undo the last move
 				if userChoice == "u":

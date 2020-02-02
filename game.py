@@ -79,7 +79,7 @@ class Game:
 		return row
 
 	def getCol(self):
-		# get the row number and validate
+		# get the col number and validate
 		col = int(input("What column do you want to put a number in (1 - 9)? ")) - 1
 		while (col) not in range(9):
 			print("Please enter a valid column (1 - 9)!")
@@ -88,7 +88,7 @@ class Game:
 		return col
 
 	def getNum(self):
-		# get the row number and validate
+		# get the number and validate
 		num = int(input("What number do you want to put a number in (1 - 9)? "))
 		while (num) not in range(10):
 			print("Please enter a valid number (1 - 9)!")
@@ -104,21 +104,11 @@ class Game:
 		# Check for correctness
 		if self.correctness:
 			if num == self.board.solved[row][col]:
-				# Tell the user if they are violating the 3 rules
-				if num in self.board.getExcludedNumbers(self.board.spaces, row, col):
-					if num in self.board.getExcludedNumbers(self.board.spaces, row, col)[:9]:
-						print("That row already contains a", str(num) + ".")
-					if num in self.board.getExcludedNumbers(self.board.spaces, row, col)[9:18]:
-						print("That column already contains a", str(num) + ".")
-					if num in self.board.getExcludedNumbers(self.board.spaces, row, col)[18:27]:
-						print("That square already contains a", str(num) + ".")
-				else:
-					# Make the move and update the move list
-					self.board.spaces[row][col] = num
-					self.board.moves.append(movePosition)
+				# Make the move and update the move list
+				self.board.spaces[row][col] = num
+				self.board.moves.append(movePosition)
 			else:
 				print(str(num) + " does not belong in position (" + str(row+ 1) + ", " + str(col + 1) + ")")
-
 		# when not checking for correctness
 		else:
 			# when the desired space is not empty
